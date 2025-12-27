@@ -23,9 +23,9 @@ const Navbar = () => {
                 </div>
 
                 <div className="flex items-center space-x-4">
-                    <button className="px-4 py-2 rounded-lg bg-primary/20 text-primary border border-primary/50 hover:bg-primary/30 transition-all font-semibold backdrop-blur-md">
+                    <Link to="/login" className="px-4 py-2 rounded-lg bg-primary/20 text-primary border border-primary/50 hover:bg-primary/30 transition-all font-semibold backdrop-blur-md">
                         Sign In
-                    </button>
+                    </Link>
                 </div>
             </div>
         </nav>

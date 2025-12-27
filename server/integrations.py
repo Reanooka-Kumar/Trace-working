@@ -83,10 +83,12 @@ async def search_candidates(query: str):
         
         candidate = {
             **user,
-            "role": query.replace("engineer", "").strip().title() + " Engineer", # Dynamic role title
-            "skills": [query.split()[0], "Python", "TensorFlow", "Git"], # Infer skills
+            "role": query.replace("engineer", "").strip().title() + " Engineer" if query else "Software Engineer", # Dynamic role title
+            "skills": [query.split()[0], "Python", "TensorFlow", "Git"] if query else ["Coding", "Design"], # Infer skills
             "score": final_score,
-            "verified_badge": enrichment
+            "verified_badge": enrichment,
+            "linkedin": f"https://www.linkedin.com/search/results/all/?keywords={user['name']}+{query or 'developer'}",
+            "github": user['link']
         }
         results.append(candidate)
     
