@@ -6,15 +6,37 @@ import { Lock, Mail, ArrowRight, Activity } from 'lucide-react';
 const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // Mock login delay
-    setTimeout(() => {
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:8000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem('token', data.access_token);
+        navigate('/search');
+      } else {
+        setError(data.detail || 'Login failed');
+      }
+    } catch (err) {
+      setError('Network error. Please try again.');
+    } finally {
       setLoading(false);
-      navigate('/search');
-    }, 1500);
+    }
   };
 
   return (
@@ -48,6 +70,12 @@ const Login = () => {
             <p className="text-gray-400">Enter your credentials to access the workspace</p>
           </div>
 
+          {error && (
+            <div className="bg-red-500/10 border border-red-500/50 text-red-500 p-3 rounded-lg mb-4 text-center text-sm">
+              {error}
+            </div>
+          )}
+
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-300 ml-1">Email Address</label>
@@ -57,6 +85,8 @@ const Login = () => {
                 </div>
                 <input
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                   className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:ring-2 focus:ring-primary/50 focus:border-primary/50 outline-none text-white placeholder-gray-500 transition-all group-hover:bg-white/10"
                   placeholder="name@company.com"
@@ -72,6 +102,8 @@ const Login = () => {
                 </div>
                 <input
                   type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                   className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:ring-2 focus:ring-secondary/50 focus:border-secondary/50 outline-none text-white placeholder-gray-500 transition-all group-hover:bg-white/10"
                   placeholder="••••••••"
@@ -96,9 +128,9 @@ const Login = () => {
 
           <p className="mt-6 text-center text-sm text-gray-400">
             Don't have an account?{' '}
-            <a href="#" className="text-primary hover:text-secondary font-semibold transition-colors">
-              Request Access
-            </a>
+            <Link to="/signup" className="text-primary hover:text-secondary font-semibold transition-colors">
+              Create Account
+            </Link>
           </p>
         </div>
       </motion.div>

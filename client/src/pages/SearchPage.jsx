@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Sparkles, User, Briefcase, Code, MapPin, Sliders, ExternalLink, Filter, X, CheckCircle, Github } from 'lucide-react';
+import { Search, Sparkles, User, Briefcase, Code, MapPin, Sliders, ExternalLink, Filter, X, CheckCircle, Github, Linkedin } from 'lucide-react';
 
 const SearchPage = () => {
     const [query, setQuery] = useState('');
@@ -199,13 +199,13 @@ const CandidateCard = ({ candidate }) => (
                 <Github className="w-5 h-5" />
             </a>
             <a
-                href={candidate.linkedin}
+                href={`https://www.linkedin.com/search/results/all/?keywords=${encodeURIComponent(candidate.name)}`}
                 target="_blank"
                 rel="noreferrer"
-                className="p-2 rounded-lg bg-white/5 hover:bg-[#0077b5] hover:text-white text-gray-400 transition-all border border-white/10"
-                title="Connect on LinkedIn"
+                className="p-2 rounded-lg bg-[#0077b5] hover:bg-[#0077b5]/90 text-white transition-all shadow-lg shadow-blue-900/20"
+                title="Search on LinkedIn"
             >
-                <ExternalLink className="w-5 h-5" />
+                <Linkedin className="w-5 h-5" />
             </a>
         </div>
     </motion.div>

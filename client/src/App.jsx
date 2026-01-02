@@ -3,8 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 import SearchPage from './pages/SearchPage';
 import Dashboard from './pages/Dashboard';
+import ProfilePage from './pages/ProfilePage';
 import InterviewRoom from './pages/InterviewRoom';
 
 function App() {
@@ -23,7 +25,9 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/search" element={<SearchPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/interview/:sessionId" element={<InterviewRoom />} />
           </Routes>
